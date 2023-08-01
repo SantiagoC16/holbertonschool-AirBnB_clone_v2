@@ -60,5 +60,5 @@ class FileStorage:
         if obj is None:
             return
         else:
-            key = '{}.{}'.format(type(obj).__name__, obj.id)
-            del FileStorage.__objects[key]
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            del self.__objects[key]
