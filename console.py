@@ -111,9 +111,10 @@ class HBNBCommand(cmd.Cmd):
         instance = HBNBCommand.classes[args[0]]()
         for argss in args:
             if "=" in argss:
-                key, value = argss.split("=")[0], argss.split("=")[1]
-                value = value.replace("_", " ")
-                setattr(instance, key, value)
+                k = argss.split("=")[0]
+                v = argss.split("=")[1]
+                v = v.replace("_", " ")
+                setattr(instance, k, v)
 
         storage.save()
         print(instance.id)
