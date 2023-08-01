@@ -57,8 +57,8 @@ class FileStorage:
 
     def delete(self, obj=None):
         """delete objects from thee dictionary"""
-        if obj is not None:
+        if obj is None:
+            return
+        else:
             key = '{}.{}'.format(type(obj).__name__, obj.id)
             del FileStorage.__objects[key]
-        else:
-            return
