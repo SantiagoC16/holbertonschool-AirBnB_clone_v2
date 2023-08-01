@@ -45,7 +45,8 @@ class FileStorage:
         classes = {
             'BaseModel': BaseModel, 'User': User, 'Place': Place,
             'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review}
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -60,3 +61,5 @@ class FileStorage:
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         if obj:
             del FileStorage.__objects[key]
+        else:
+            return
