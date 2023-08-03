@@ -111,10 +111,16 @@ class HBNBCommand(cmd.Cmd):
         for argss in args:
             if "=" in argss:
                 k = argss.split("=")[0]
-                v = argss.split("=")[1].strip("\"")
-                v = v.replace("_", " ")
+                v = argss.split("=")[1]
+                if '"' in v:
+                    v = str(v)
+                    v = v.replace("_", " ")
+                    v = v.strip("\"")
+                elif "." in v:
+                    v = float(v)
+                else:
+                    v = int(v)
                 setattr(instance, k, v)
-
         storage.save()
         print(instance.id)
         storage.save()
