@@ -112,12 +112,12 @@ class HBNBCommand(cmd.Cmd):
         for argss in args:
             if "=" in argss:
                 k = argss.split("=")[0]
-                v = argss.split("=")[1]
+                v = argss.split("=")[1].strip("\"")
                 v = v.replace("_", " ")
                 setattr(instance, k, v)
 
-        storage.save()
         print(instance.id)
+        storage.save(instance)
 
     def help_create(self):
         """ Help information for the create method """
