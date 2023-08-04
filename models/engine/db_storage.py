@@ -3,13 +3,13 @@
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models.base_model import BaseModel, Base
+from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.user import User
+from models.base_model import Base
 from os import getenv
 
 models = [State, City, Amenity, Place, Review, User]
@@ -34,15 +34,14 @@ class DBStorage():
     def all(self, cls=None):
         """all"""
         objects = {}
-        if cls:
-            for obj in self.__session.query(eval(cls)).all():
-                key = "{}.{}".format(type(obj).__name__, obj.id)
-                objects[key] = obj
+        if cls is not None:
+            for obj in self.__session.query(cls):
+                objects[cls.__name__ + '.' + obj.id] = obj
+            return objects
         else:
             for clas in models:
-                for obj in self.__session.query(eval(clas)).all():
-                    key = "{}.{}".format(type(obj).__name__, obj.id)
-                    objects[key] = obj
+                for objs in self.__session(clas):
+                    objects[clas + "." + objs.id] = obj
         return objects
 
     def new(self, obj):
