@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
-import sqlalchemy
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, func
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from os import getenv
 
 
