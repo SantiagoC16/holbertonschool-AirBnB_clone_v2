@@ -13,8 +13,8 @@ class FileStorage:
         if cls:
             my_dict = {}
             for k, v in self.__objects.items():
-                if type(v) == cls:
-                    my_dict[k] = v
+                if FileStorage.__objects[k].__class__ == cls:
+                    my_dict[k] = str(v)
             return my_dict
         return self.__objects
 
@@ -61,4 +61,4 @@ class FileStorage:
             return
         else:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+            del FileStorage.__objects[key]

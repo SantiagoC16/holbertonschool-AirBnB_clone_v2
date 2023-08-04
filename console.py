@@ -99,30 +99,30 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        args = args.split()
         if not args:
             print("** class name missing **")
             return
-        elif args[0] not in HBNBCommand.classes:
+        args = args.split()
+        classs = args[0]
+        if classs not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-
-        instance = HBNBCommand.classes[args[0]]()
-        for argss in args:
-            if "=" in argss:
-                k = argss.split("=")[0]
-                v = argss.split("=")[1]
-                if '"' in v:
-                    v = str(v)
-                    v = v.replace("_", " ")
-                    v = v.strip("\"")
-                elif "." in v:
-                    v = float(v)
-                else:
-                    v = int(v)
-                setattr(instance, k, v)
-        storage.save()
-        print(instance.id)
+        new_instance = HBNBCommand.classes[classs]()
+        for params in args[1:]:
+            params = params.split('=')
+            key = params[0]
+            value = params[1]
+            if value[0] == '"':
+                value = str(value[1:-1])
+                value = value.replace("_", " ")
+                value = value.replace('"', '\"')
+            elif value.find(".") != -1:
+                value = float(value)
+            else:
+                value = int(value)
+            setattr(new_instance, key, value)
+        new_instance.save()
+        print(new_instance.id)
         storage.save()
 
     def help_create(self):
@@ -205,7 +205,7 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all(HBNBCommand.classes[args]).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:

@@ -23,44 +23,44 @@ class DBStorage():
     def __init__(self):
         """init class where we create the engine"""
         user = getenv("HBNB_MYSQL_USER")
-        password = getenv("HBNB_MYSQL_USER")
+        password = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
         database = getenv("HBNB_MYSQL_DB")
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, password, host, database), pool_pre_ping=True)
-        if getenv('HBNB_ENV') == 'test':
-            Base.metadata.drop(self.__engine)
+        if getenv('HBNB_ENV') == "test":
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """all"""
         objects = {}
-        if cls is not None:
-            if cls in models:
-                _query = self.__session.query(cls).all()
-                for obj in _query:
-                    key = "{}.{}".format(obj.__name__, obj.id)
-                    objects[key] = obj
-                return objects
+        if cls:
+            for obj in self.__session.query(eval(cls)).all():
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                objects[key] = obj
         else:
-            for cls in models:
-                _query = self.__session.query(cls).all()
-                for obj in _query:
-                    key = "{}.{}".format(obj.__name__, obj.id)
+            for clas in models:
+                for obj in self.__session.query(eval(clas)).all():
+                    key = "{}.{}".format(type(obj).__name__, obj.id)
                     objects[key] = obj
+        return objects
 
     def new(self, obj):
         """comment"""
-        pass
+        self.__session.add(obj)
 
     def save(self):
         """comment"""
-        pass
+        self.__session.commit()
 
     def delete(self, obj=None):
         """comment"""
-        pass
+        if obj is None:
+            self.__session.delete(obj)
 
     def reload(self):
         """comment"""
-        pass
-    # comment cuz i need to push and github didnt save
+        Base.metadata.create_all(self.__engine)
+        session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session)
+        self.__session = Session()
