@@ -36,6 +36,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
+            """getter method review attribute"""
             from models import storage
             from models.review import Review
             reviews = []
@@ -46,6 +47,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
+            """getter method amenity attribute"""
             from models import storage
             from models.amenity import Amenity
             amenitys = []
@@ -56,6 +58,7 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, value):
+            """setter method amenity attribute"""
             from models.amenity import Amenity
             if type(value) == Amenity:
                 self.amenity_ids.append(value.id)

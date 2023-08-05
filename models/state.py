@@ -17,6 +17,7 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
+            """getter method cities attribute"""
             from models import storage
             from models.city import City
             cities = []
