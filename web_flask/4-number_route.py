@@ -30,8 +30,8 @@ def python_text(text="is cool"):
 
 @app.route('/number/<n>', strict_slashes=False)
 def num(n):
-    if isinstance(n, int):
-        return "C {}".format(n)
+    if type(n) == int:
+        return "{}".format(n)
 
 
 if __name__ == '__main__':
