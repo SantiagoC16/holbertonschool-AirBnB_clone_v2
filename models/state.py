@@ -19,9 +19,12 @@ class State(BaseModel, Base):
         def cities(self):
             """getter method cities attribute"""
             from models import storage
-            from models.city import City
             cities = []
-            for city in storage.all(City).values():
-                if city.state_id == self.id:
-                    cities.append(city)
-            return cities
+            dict = storage._FileStorage__objects.items()
+            for key, value in dict:
+                splited_key = key.split('.')
+                if splited_key[0] == 'City':
+                    cities.append(value)
+            filtered_cities = list(
+                filter(lambda x: x.state_id == self.id, cities))
+            return filtered_cities
