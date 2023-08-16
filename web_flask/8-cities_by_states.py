@@ -14,7 +14,6 @@ def cities_by_states():
     return render_template('8-cities_by_states.html', states=states)
 
 
-
 @app.teardown_appcontext
 def teardown(exception):
     """closes the sql session"""
