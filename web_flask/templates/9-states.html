@@ -6,16 +6,17 @@
   <body>
     <h1>States</h1>
     <ul>
-      {% for state in states.values() | sort(attribute="name") %}
-      <li>
-        State: {{state.id}}: <b>{{state.name}}</b>
-        <ul>
-          {% for city in state.cities | sort(attribute="name") %}
-          <li>City: {{city.id}}: <b>{{city.name}}</b></li>
-          {% endfor %}
-        </ul>
-      </li>
+      {% for state in states %}
+      <li>{{ state.id }}: <b>{{ state.name }}</b></li>
+      <ul>
+        {% for city in state.cities %}
+        <li>{{ city.id }}: <b>{{ city.name }}</b></li>
+        {% endfor %}
+      </ul>
       {% endfor %}
     </ul>
+    {% else %}
+    <h1>Not found!</h1>
+    {% endif %}
   </body>
 </html>
