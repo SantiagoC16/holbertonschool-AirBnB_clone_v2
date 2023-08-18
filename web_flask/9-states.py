@@ -8,13 +8,15 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
-def list_states_id():
+def list_states():
+    """documentation states..."""
     states = storage.all(State).values()
     return render_template('9-states.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
 def list_states_id(id):
+    """documentation states id"""
     for states_id in storage.all(State).values():
         if states_id.id == id:
             return render_template("9-states.html", states_id=states_id)
