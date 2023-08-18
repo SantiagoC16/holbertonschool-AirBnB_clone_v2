@@ -18,11 +18,11 @@ def list_states():
 def list_states_id(id):
     """documentation states id"""
     states = storage.all(State)
-    state = states.get(State, id)
+    state = states.get(State, id=id)
     if state is None:
-        return render_template('9-states.html')
+        return render_template('9-states.html', not_found=True)
     else:
-        return render_template('9-states.html', states_id=state)
+        return render_template('9-states.html', state=state)
 
 
 @app.teardown_appcontext
