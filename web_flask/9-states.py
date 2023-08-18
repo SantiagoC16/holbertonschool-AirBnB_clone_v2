@@ -19,7 +19,7 @@ def list_states_id(id):
     """documentation states id"""
     for states_id in storage.all(State).values():
         if states_id.id == id:
-            return render_template("9-states.html", states_id=states_id)
+            return render_template('9-states.html', states_id=states_id)
         else:
             return render_template('9-states.html')
 
